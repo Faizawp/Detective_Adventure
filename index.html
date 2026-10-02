@@ -1031,7 +1031,10 @@
 
             openDeductionModal() {
                 const ded = state.caseDeduction; audioSys.play('unlock');
-                document.getElementById('deduct-q').textContent = ded.question; document.getElementById('deduct-prompt').textContent = ded.explanation_prompt || "Explain your reasoning:"; document.getElementById('deduct-text').value = ""; document.getElementById('deduct-result').style.display = "none"; document.getElementById('btn-submit-deduct').style.display = "block"; document.getElementById('btn-finish-deduct').style.display = "none";
+                document.getElementById('deduct-q').textContent = ded.question; document.getElementById('deduct-prompt').textContent = ded.explanation_prompt || "Explain your reasoning:"; 
+                document.getElementById('deduct-text').value = ""; 
+                document.getElementById('deduct-text').disabled = false; // BUGFIX: Buka kembali kunci kotak teks untuk kasus berikutnya
+                document.getElementById('deduct-result').style.display = "none"; document.getElementById('btn-submit-deduct').style.display = "block"; document.getElementById('btn-finish-deduct').style.display = "none";
                 const optsBox = document.getElementById('deduct-options'); optsBox.innerHTML = '';
                 ['A','B','C','D'].forEach(opt => { const btn = document.createElement('button'); btn.className = "q-opt-btn"; btn.textContent = `${opt}. ${ded['option_'+opt.toLowerCase()]}`; btn.onclick = () => { audioSys.play('click'); document.querySelectorAll('#deduct-options .q-opt-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); state.selectedDeductionOpt = opt; }; optsBox.appendChild(btn); });
                 document.getElementById('deduction-modal').classList.add('active');
